@@ -238,7 +238,7 @@ class AlgEasyUpdate
 				dict[ 'row' ] = i
 				dict[ 'col' ] = j
 				dict[ 'value' ] = $sudoku[ i ][ j ] = $helper[ i ][ j ][ 0 ]
-				dict[ 'reason' ] = "( #{i}, #{j} ) set to #{$sudoku[i][j]}, " \
+				dict[ 'reason' ] = "( #{i+1}, #{j+1} ) set to #{$sudoku[i][j]}, " \
 					"only possible value"
 				return dict
 			end
@@ -251,7 +251,7 @@ class AlgSectorUpdate
 	def checkHelper( x, y, val, str )
 		if $helper[ x ][ y ].include? val
 			return makeDict( x, y, $sudoku[ x ][ y ] = val, \
-				"( #{x}, #{y} ) set to #{val}, only possible in #{str}" )
+				"( #{x+1}, #{y+1} ) set to #{val}, only possible in #{str}" )
 		end
 		return nil
 	end
@@ -351,8 +351,8 @@ class AlgCheckOwning
 				end
 				if taken.length > 0
 					rc = ( i / 3 ) * 3
-					return { "reason" => "#{taken} taken in row #{i} by " +
-						"square ( #{rc}, #{nr} ) -> ( #{rc+2}, #{nr+2} )" }
+					return { "reason" => "#{taken} taken in row #{i+1} by " +
+						"square ( #{rc+1}, #{nr+1} ) -> ( #{rc+3}, #{nr+3} )" }
 				end
 				owncol = sqCol( nr, i )
 				(0...6).each do |j|
@@ -365,8 +365,8 @@ class AlgCheckOwning
 				end
 				if taken.length > 0
 					rc = ( i / 3 ) * 3
-					return { "reason" => "#{taken} taken in col #{i} by " +
-						"square ( #{nr}, #{rc} ) -> ( #{nr+2}, #{rc+2} )" }
+					return { "reason" => "#{taken} taken in col #{i+1} by " +
+						"square ( #{nr+1}, #{rc+1} ) -> ( #{nr+3}, #{rc+3} )" }
 				end
 			end
 		end
@@ -397,7 +397,7 @@ class AlgCheckNakedTuple
 				end
 		end
 		if result
-			return { 'reason' => "found tuple #{val} in #{str} #{index}" }
+			return { 'reason' => "found tuple #{val} in #{str} #{index+1}" }
 		end
 		return nil
 	end
@@ -458,7 +458,7 @@ class AlgCheckHiddenTuple
 						if removed
 							return {'reason' => "found hidden tuple " +
 								"( #{numbers[ a ]}, #{numbers[ b ]} ) in row" +
-								" #{row}" }
+								" #{row+1}" }
 						end
 					end
 				end
@@ -482,7 +482,7 @@ class AlgCheckHiddenTuple
 						if removed
 							return {'reason' => "found hidden tuple " +
 								"( #{numbers[ a ]}, #{numbers[ b ]} ) in col" +
-								" #{col}" }
+								" #{col+1}" }
 						end
 					end
 				end
